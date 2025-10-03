@@ -1049,6 +1049,110 @@
             updateCartDisplay();
         };
 
+        // Open checkout modal
+        window.openCheckout = () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            // Load user profile data
+            db.ref(`customers/${currentUser.uid}`).once('value').then(snapshot => {
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    document.getElementById('checkoutAddress').value = data.address || '';
+                    document.getElementById('checkoutPhone').value = data.phone || '';
+                }
+            });
+
+            // Update checkout summary
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('checkoutSummary').innerHTML = `
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span>₹${total}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee:</span>
+                        <span>₹40</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span>₹${total + 40}</span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('checkoutModal').classList.add('active');
+        };
+
+        // Close checkout modal
+        window.closeCheckout = () => {
+            document.getElementById('checkoutModal').classList.remove('active');
+        };
+
+        // Checkout form handler
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const address = document.getElementById('checkoutAddress').value;
+            const phone = document.getElementById('checkoutPhone').value;
+
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            try {
+                // Get restaurant name
+                const restaurantSnapshot = await db.ref(`restaurants/${currentRestaurant}`).once('value');
+                const restaurant = restaurantSnapshot.val();
+                
+                // Calculate total
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const total = subtotal + 40; // Add delivery fee
+
+                // Create order
+                const orderId = db.ref().child('orders').push().key;
+                const order = {
+                    orderId,
+                    customerId: currentUser.uid,
+                    restaurantId: currentRestaurant,
+                    restaurantName: restaurant.name,
+                    items: cart,
+                    address,
+                    phone,
+                    subtotal,
+                    deliveryFee: 40,
+                    total,
+                    status: 'placed',
+                    createdAt: Date.now()
+                };
+
+                // Save order
+                await db.ref(`orders/${orderId}`).set(order);
+                
+                // Clear cart
+                cart = [];
+                updateCartDisplay();
+                
+                // Close modal
+                closeCheckout();
+                
+                // Show success message
+                alert('Order placed successfully!');
+                
+                // Navigate to orders
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                document.querySelector('[data-nav="orders"]').classList.add('active');
+                showContent('orders');
+                
+            } catch (error) {
+                console.error('Checkout error:', error);
+                alert('Error placing order: ' + error.message);
+            }
+        });
+
         // Load orders
         function loadOrders() {
             db.ref(`orders`).orderByChild('customerId').equalTo(currentUser.uid).on('value', (snapshot) => {
@@ -1081,6 +1185,68 @@
                 </div>
             `).join('');
         }
+
+        // Rate order
+        window.rateOrder = (orderId) => {
+            currentOrderForRating = orderId;
+            selectedRating = 0;
+            
+            // Reset stars
+            document.querySelectorAll('.star').forEach(star => {
+                star.classList.remove('active');
+            });
+            
+            // Add click event to stars
+            document.querySelectorAll('.star').forEach(star => {
+                star.onclick = function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    selectedRating = rating;
+                    
+                    // Update star display
+                    document.querySelectorAll('.star').forEach(s => {
+                        s.classList.remove('active');
+                        if (parseInt(s.getAttribute('data-rating')) <= rating) {
+                            s.classList.add('active');
+                        }
+                    });
+                };
+            });
+            
+            document.getElementById('ratingModal').classList.add('active');
+        };
+
+        // Close rating modal
+        window.closeRating = () => {
+            document.getElementById('ratingModal').classList.remove('active');
+        };
+
+        // Submit rating
+        window.submitRating = async () => {
+            if (selectedRating === 0) {
+                alert('Please select a rating');
+                return;
+            }
+
+            try {
+                const reviewText = document.getElementById('reviewText').value;
+                
+                await db.ref(`ratings/${currentOrderForRating}`).set({
+                    orderId: currentOrderForRating,
+                    customerId: currentUser.uid,
+                    rating: selectedRating,
+                    review: reviewText,
+                    createdAt: Date.now()
+                });
+
+                alert('Thank you for your rating!');
+                closeRating();
+                document.getElementById('reviewText').value = '';
+                
+            } catch (error) {
+                console.error('Rating error:', error);
+                alert('Error submitting rating: ' + error.message);
+            }
+        };
 
         // Logout function
         window.logout = async () => {
