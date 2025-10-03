@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hunger Food - Delivery Partner</title>
+    <title>Hunger Food - Customer</title>
     <style>
-        /* Your existing CSS remains the same */
         * {
             margin: 0;
             padding: 0;
@@ -13,467 +12,122 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding-bottom: 70px;
         }
 
         .auth-container {
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .auth-box {
             background: white;
+            padding: 30px;
             border-radius: 20px;
-            padding: 40px;
-            width: 100%;
-            max-width: 450px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
         }
 
         .logo {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .logo h1 {
-            color: #11998e;
-            font-size: 32px;
+            color: #667eea;
+            font-size: 28px;
             margin-bottom: 5px;
         }
 
         .logo p {
             color: #666;
-            font-size: 14px;
+            font-size: 13px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            color: #666;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #333;
             font-weight: 500;
+            font-size: 14px;
         }
 
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
+            padding: 12px;
             border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 14px;
-            transition: all 0.3s;
+            font-family: inherit;
         }
 
         .form-group input:focus, .form-group textarea:focus {
             outline: none;
-            border-color: #11998e;
+            border-color: #667eea;
         }
 
         .btn {
             width: 100%;
             padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: transform 0.2s;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(17, 153, 142, 0.3);
         }
 
-        .toggle-form {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
-        .toggle-form a {
-            color: #11998e;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .error-msg {
+        .error {
             background: #fee;
             color: #c33;
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 15px;
-            display: none;
-        }
-
-        .success-msg {
-            background: #efe;
-            color: #3c3;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            display: none;
-        }
-
-        .dashboard {
-            display: none;
-            background: #f5f5f5;
-            min-height: 100vh;
-            padding-bottom: 80px;
-        }
-
-        .header {
-            background: white;
-            padding: 15px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .header h2 {
-            color: #11998e;
-            font-size: 24px;
-        }
-
-        .btn-logout {
-            padding: 8px 16px;
-            background: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .status-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .status-approved {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .online-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .switch {
-            position: relative;
-            width: 50px;
-            height: 26px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: #11998e;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(24px);
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(17, 153, 142, 0.2);
-        }
-
-        .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            opacity: 0.9;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .order-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            border-left: 4px solid #11998e;
-        }
-
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-        }
-
-        .order-id {
-            font-weight: 700;
-            color: #333;
-            font-size: 16px;
-        }
-
-        .order-time {
-            font-size: 12px;
-            color: #999;
-        }
-
-        .order-status {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-
-        .order-info {
-            margin-bottom: 15px;
-        }
-
-        .info-row {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .info-icon {
-            margin-right: 10px;
-            font-size: 16px;
-        }
-
-        .info-text {
-            flex: 1;
-            color: #555;
-            line-height: 1.5;
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: #333;
-        }
-
-        .order-items {
-            background: #f8f9fa;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .order-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-
-        .order-total {
-            display: flex;
-            justify-content: space-between;
-            padding-top: 10px;
-            border-top: 2px solid #e0e0e0;
-            font-weight: 700;
-            color: #11998e;
-            font-size: 18px;
-        }
-
-        .location-section {
-            background: #fff3cd;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .location-input {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .location-input input {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .btn-send-location {
-            padding: 10px 20px;
-            background: #11998e;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .order-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-action {
-            flex: 1;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-pickup {
-            background: #ffc107;
-            color: #333;
-        }
-
-        .btn-deliver {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-pickup:active, .btn-deliver:active {
-            transform: scale(0.98);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #999;
-        }
-
-        .empty-state-icon {
-            font-size: 64px;
-            margin-bottom: 15px;
-        }
-
-        .empty-state-text {
-            font-size: 16px;
-            color: #666;
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 100;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #999;
-            text-decoration: none;
-            font-size: 12px;
-            cursor: pointer;
-            padding: 5px 15px;
-            transition: all 0.3s;
-        }
-
-        .nav-item.active {
-            color: #11998e;
-        }
-
-        .nav-icon {
-            font-size: 24px;
-            margin-bottom: 4px;
+            font-size: 13px;
         }
 
         .tab-content {
@@ -484,274 +138,590 @@
             display: block;
         }
 
-        .profile-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        .app {
+            display: none;
         }
 
-        .profile-header {
-            text-align: center;
-            margin-bottom: 25px;
+        .app.active {
+            display: block;
         }
 
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            margin: 0 auto 15px;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
-        .profile-name {
-            font-size: 22px;
-            font-weight: 700;
-            color: #333;
+        .header h1 {
+            font-size: 24px;
             margin-bottom: 5px;
         }
 
-        .profile-email {
-            font-size: 14px;
-            color: #999;
-        }
-
-        .earnings-card {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .earnings-label {
-            font-size: 14px;
+        .header p {
+            font-size: 13px;
             opacity: 0.9;
-            margin-bottom: 10px;
         }
 
-        .earnings-value {
-            font-size: 42px;
-            font-weight: 700;
+        .content {
+            padding: 15px;
+            display: none;
         }
 
-        .history-item {
+        .content.active {
+            display: block;
+        }
+
+        .search-bar {
             background: white;
             padding: 15px;
             border-radius: 12px;
-            margin-bottom: 12px;
-            border-left: 4px solid #11998e;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .history-header {
-            display: flex;
-            justify-content: space-between;
+        .search-bar input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .restaurant-card {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .restaurant-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .restaurant-info {
+            padding: 15px;
+        }
+
+        .restaurant-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .restaurant-info p {
+            color: #666;
+            font-size: 13px;
             margin-bottom: 8px;
         }
 
-        .history-date {
-            font-size: 13px;
-            color: #999;
+        .menu-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
         }
 
-        .history-amount {
-            font-weight: 700;
-            color: #11998e;
+        .menu-item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .menu-item-info {
+            flex: 1;
+        }
+
+        .menu-item-info h4 {
+            color: #333;
+            margin-bottom: 5px;
             font-size: 16px;
         }
 
-        .history-details {
+        .menu-item-info p {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .menu-item-info .price {
+            color: #667eea;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .add-btn {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .cart-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .cart-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .cart-item h4 {
+            color: #333;
+            font-size: 15px;
+        }
+
+        .cart-item .price {
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-control button {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .quantity-control span {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .cart-summary {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
             font-size: 14px;
+        }
+
+        .summary-row.total {
+            font-size: 18px;
+            font-weight: 700;
+            color: #667eea;
+            padding-top: 8px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .order-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .order-id {
+            font-size: 13px;
             color: #666;
         }
 
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-placed { background: #fff3cd; color: #856404; }
+        .status-accepted { background: #d1ecf1; color: #0c5460; }
+        .status-preparing { background: #d4edda; color: #155724; }
+        .status-ready { background: #cce5ff; color: #004085; }
+        .status-picked { background: #e2e3e5; color: #383d41; }
+        .status-delivering { background: #d6d8db; color: #1b1e21; }
+        .status-delivered { background: #d4edda; color: #155724; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+
+        .order-info p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .order-info strong {
+            color: #333;
+        }
+
+        .reorder-btn {
+            width: 100%;
+            padding: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .profile-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            cursor: pointer;
+            color: #999;
+            font-size: 12px;
+        }
+
+        .nav-item.active {
+            color: #667eea;
+        }
+
+        .nav-item-icon {
+            font-size: 24px;
+            margin-bottom: 3px;
+        }
+
+        .back-btn {
+            background: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .star {
+            font-size: 24px;
+            cursor: pointer;
+            color: #ddd;
+        }
+
+        .star.active {
+            color: #ffc107;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: #333;
+            font-size: 20px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .checkout-form .form-group {
+            margin-bottom: 15px;
+        }
+
         @media (max-width: 768px) {
-            .auth-box {
-                padding: 30px 20px;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .order-actions {
-                flex-direction: column;
-            }
+            .header h1 { font-size: 20px; }
+            .restaurant-card img { height: 120px; }
         }
     </style>
 </head>
 <body>
-    <!-- Auth Section -->
-    <div class="auth-container" id="authContainer">
+    <div id="authContainer" class="auth-container">
         <div class="auth-box">
             <div class="logo">
-                <h1>🏍️ Hunger Food</h1>
-                <p>Delivery Partner Portal</p>
+                <h1>🍔 Hunger Food</h1>
+                <p>Order your favorite food</p>
             </div>
 
-            <div class="error-msg" id="authError"></div>
-            <div class="success-msg" id="authSuccess"></div>
-
-            <!-- Login Form -->
-            <div id="loginForm">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password">
-                </div>
-                <button class="btn btn-primary" onclick="handleLogin()">Login</button>
-                <div class="toggle-form">
-                    Don't have an account? <a href="#" onclick="toggleForms()">Sign Up</a>
-                </div>
+            <div class="tabs">
+                <div class="tab active" data-tab="login">Login</div>
+                <div class="tab" data-tab="signup">Sign Up</div>
             </div>
 
-            <!-- Signup Form -->
-            <div id="signupForm" style="display:none;">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="signupName" placeholder="Enter your full name">
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="signupEmail" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="signupPassword" placeholder="Minimum 6 characters">
-                </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="tel" id="signupPhone" placeholder="Enter phone number">
-                </div>
-                <div class="form-group">
-                    <label>Vehicle Type</label>
-                    <input type="text" id="signupVehicle" placeholder="e.g., Bike, Scooter">
-                </div>
-                <div class="form-group">
-                    <label>Vehicle Number</label>
-                    <input type="text" id="signupVehicleNumber" placeholder="Enter vehicle number">
-                </div>
-                <button class="btn btn-primary" onclick="handleSignup()">Sign Up</button>
-                <div class="toggle-form">
-                    Already have an account? <a href="#" onclick="toggleForms()">Login</a>
-                </div>
+            <div id="errorMessage" class="error" style="display: none;"></div>
+
+            <div id="loginTab" class="tab-content active">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                </form>
+            </div>
+
+            <div id="signupTab" class="tab-content">
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="signupName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="signupEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="signupPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea id="signupAddress" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="signupPassword" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn">Sign Up</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- Dashboard Section -->
-    <div class="dashboard" id="dashboard">
+    <div id="app" class="app">
         <div class="header">
-            <div class="header-top">
-                <h2>🏍️ Delivery Partner</h2>
-                <button class="btn-logout" onclick="handleLogout()">Logout</button>
+            <h1 id="headerTitle">Hunger Food</h1>
+            <p id="headerSubtitle">Welcome back!</p>
+        </div>
+
+        <div id="homeContent" class="content active">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Search restaurants...">
             </div>
-            <div class="status-row">
-                <span class="status-badge" id="approvalStatus">Pending Approval</span>
-                <div class="online-toggle">
-                    <span style="font-size: 12px; color: #666;">Offline</span>
-                    <label class="switch">
-                        <input type="checkbox" id="onlineToggle" onchange="toggleOnlineStatus()" disabled>
-                        <span class="slider"></span>
-                    </label>
-                    <span style="font-size: 12px; font-weight: 600; color: #11998e;">Online</span>
-                </div>
+            <div id="restaurantsList"></div>
+        </div>
+
+        <div id="menuContent" class="content">
+            <button class="back-btn" onclick="goBack()">← Back</button>
+            <div id="restaurantDetails"></div>
+            <div id="menuItems"></div>
+        </div>
+
+        <div id="cartContent" class="content">
+            <div id="cartItems"></div>
+            <div id="cartSummarySection"></div>
+        </div>
+
+        <div id="ordersContent" class="content">
+            <div id="ordersList"></div>
+        </div>
+
+        <div id="profileContent" class="content">
+            <div class="profile-card">
+                <h3>My Profile</h3>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="profileName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="tel" id="profilePhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea id="profileAddress" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Update Profile</button>
+                </form>
+            </div>
+            <div class="profile-card">
+                <button class="btn" onclick="logout()" style="background: #ff4757;">Logout</button>
             </div>
         </div>
 
-        <div class="content">
-            <!-- Orders Tab -->
-            <div class="tab-content active" id="ordersTab">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="todayDeliveries">0</div>
-                        <div class="stat-label">Today's Deliveries</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="todayEarnings">₹0</div>
-                        <div class="stat-label">Today's Earnings</div>
-                    </div>
-                </div>
-
-                <div class="section-title">Assigned Orders</div>
-                <div id="ordersContent"></div>
-            </div>
-
-            <!-- Profile Tab -->
-            <div class="tab-content" id="profileTab">
-                <div class="profile-card">
-                    <div class="profile-header">
-                        <div class="profile-avatar">🏍️</div>
-                        <div class="profile-name" id="profileName">Loading...</div>
-                        <div class="profile-email" id="profileEmail">Loading...</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" id="editName">
-                    </div>
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="tel" id="editPhone">
-                    </div>
-                    <div class="form-group">
-                        <label>Vehicle Type</label>
-                        <input type="text" id="editVehicle">
-                    </div>
-                    <div class="form-group">
-                        <label>Vehicle Number</label>
-                        <input type="text" id="editVehicleNumber">
-                    </div>
-                    <button class="btn btn-primary" onclick="updateProfile()">Update Profile</button>
-                </div>
-            </div>
-
-            <!-- Earnings Tab -->
-            <div class="tab-content" id="earningsTab">
-                <div class="earnings-card">
-                    <div class="earnings-label">Total Earnings</div>
-                    <div class="earnings-value" id="totalEarnings">₹0</div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="totalDeliveries">0</div>
-                        <div class="stat-label">Total Deliveries</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="avgEarnings">₹0</div>
-                        <div class="stat-label">Avg per Delivery</div>
-                    </div>
-                </div>
-
-                <div class="section-title">Earnings History</div>
-                <div id="earningsHistory"></div>
-            </div>
-        </div>
-
-        <!-- Bottom Navigation -->
         <div class="bottom-nav">
-            <div class="nav-item active" onclick="switchTab('orders')">
-                <div class="nav-icon">📦</div>
+            <div class="nav-item active" data-nav="home">
+                <div class="nav-item-icon">🏠</div>
+                <div>Home</div>
+            </div>
+            <div class="nav-item" data-nav="cart">
+                <div class="nav-item-icon">🛒</div>
+                <div>Cart</div>
+            </div>
+            <div class="nav-item" data-nav="orders">
+                <div class="nav-item-icon">📦</div>
                 <div>Orders</div>
             </div>
-            <div class="nav-item" onclick="switchTab('earnings')">
-                <div class="nav-icon">💰</div>
-                <div>Earnings</div>
-            </div>
-            <div class="nav-item" onclick="switchTab('profile')">
-                <div class="nav-icon">👤</div>
+            <div class="nav-item" data-nav="profile">
+                <div class="nav-item-icon">👤</div>
                 <div>Profile</div>
             </div>
+        </div>
+    </div>
+
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Checkout</h2>
+                <button class="close-modal" onclick="closeCheckout()">×</button>
+            </div>
+            <form id="checkoutForm" class="checkout-form">
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <textarea id="checkoutAddress" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="checkoutPhone" required>
+                </div>
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <input type="text" value="Cash on Delivery" readonly style="background: #f5f5f5;">
+                </div>
+                <div id="checkoutSummary" style="margin: 20px 0;"></div>
+                <button type="submit" class="btn">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="ratingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Rate Order</h2>
+                <button class="close-modal" onclick="closeRating()">×</button>
+            </div>
+            <div style="text-align: center; margin: 20px 0;">
+                <div class="rating-stars" id="ratingStars">
+                    <span class="star" data-rating="1">★</span>
+                    <span class="star" data-rating="2">★</span>
+                    <span class="star" data-rating="3">★</span>
+                    <span class="star" data-rating="4">★</span>
+                    <span class="star" data-rating="5">★</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Review (Optional)</label>
+                <textarea id="reviewText" rows="4" placeholder="Share your experience..."></textarea>
+            </div>
+            <button class="btn" onclick="submitRating()">Submit Rating</button>
         </div>
     </div>
 
@@ -779,55 +749,117 @@
         const db = firebase.database();
 
         let currentUser = null;
-        let deliveryData = null;
+        let cart = [];
+        let currentRestaurant = null;
+        let selectedRating = 0;
+        let currentOrderForRating = null;
 
-        // Utility functions for showing messages
+        // Utility functions
         function showError(message) {
-            const errorDiv = document.getElementById('authError');
+            const errorDiv = document.getElementById('errorMessage');
             errorDiv.textContent = message;
             errorDiv.style.display = 'block';
-            document.getElementById('authSuccess').style.display = 'none';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
         }
 
-        function showSuccess(message) {
-            const successDiv = document.getElementById('authSuccess');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
-            document.getElementById('authError').style.display = 'none';
+        function showContent(contentName) {
+            document.querySelectorAll('.content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(contentName + 'Content').classList.add('active');
         }
 
-        function hideMessages() {
-            document.getElementById('authError').style.display = 'none';
-            document.getElementById('authSuccess').style.display = 'none';
+        function goBack() {
+            showContent('home');
         }
 
-        // Form toggle function
-        window.toggleForms = () => {
-            const loginForm = document.getElementById('loginForm');
-            const signupForm = document.getElementById('signupForm');
-            if (loginForm.style.display === 'none') {
-                loginForm.style.display = 'block';
-                signupForm.style.display = 'none';
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + 'Tab').classList.add('active');
+            });
+        });
+
+        // Navigation switching
+        document.querySelectorAll('.nav-item').forEach(nav => {
+            nav.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                nav.classList.add('active');
+                showContent(nav.dataset.nav);
+            });
+        });
+
+        // Auth state listener
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                loadUserProfile();
+                document.getElementById('authContainer').style.display = 'none';
+                document.getElementById('app').classList.add('active');
+                loadRestaurants();
+                loadOrders();
             } else {
-                loginForm.style.display = 'none';
-                signupForm.style.display = 'block';
+                document.getElementById('authContainer').style.display = 'flex';
+                document.getElementById('app').classList.remove('active');
             }
-            hideMessages();
-        };
+        });
 
-        // Login function
-        window.handleLogin = async () => {
-            const email = document.getElementById('loginEmail').value.trim();
+        // Signup form handler
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const phone = document.getElementById('signupPhone').value;
+            const address = document.getElementById('signupAddress').value;
+            const password = document.getElementById('signupPassword').value;
+
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const uid = userCredential.user.uid;
+                
+                await db.ref(`customers/${uid}`).set({
+                    name, email, phone, address,
+                    createdAt: Date.now()
+                });
+
+                alert('Account created successfully!');
+                // Clear form
+                document.getElementById('signupForm').reset();
+            } catch (error) {
+                console.error('Signup error:', error);
+                let errorMessage = 'Signup failed. ';
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        errorMessage += 'Email already registered.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage += 'Invalid email address.';
+                        break;
+                    case 'auth/weak-password':
+                        errorMessage += 'Password is too weak.';
+                        break;
+                    default:
+                        errorMessage += error.message;
+                }
+                showError(errorMessage);
+            }
+        });
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
-
-            if (!email || !password) {
-                showError('Please fill in all fields');
-                return;
-            }
 
             try {
                 await auth.signInWithEmailAndPassword(email, password);
-                showSuccess('Login successful!');
+                // Clear form
+                document.getElementById('loginForm').reset();
             } catch (error) {
                 console.error('Login error:', error);
                 let errorMessage = 'Login failed. ';
@@ -846,256 +878,236 @@
                 }
                 showError(errorMessage);
             }
-        };
+        });
 
-        // Signup function
-        window.handleSignup = async () => {
-            const name = document.getElementById('signupName').value.trim();
-            const email = document.getElementById('signupEmail').value.trim();
-            const password = document.getElementById('signupPassword').value;
-            const phone = document.getElementById('signupPhone').value.trim();
-            const vehicle = document.getElementById('signupVehicle').value.trim();
-            const vehicleNumber = document.getElementById('signupVehicleNumber').value.trim();
-
-            if (!name || !email || !password || !phone || !vehicle || !vehicleNumber) {
-                showError('Please fill in all fields');
-                return;
-            }
-
-            if (password.length < 6) {
-                showError('Password must be at least 6 characters');
-                return;
-            }
+        // Profile form handler
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('profileName').value;
+            const phone = document.getElementById('profilePhone').value;
+            const address = document.getElementById('profileAddress').value;
 
             try {
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                const user = userCredential.user;
-
-                // Create delivery partner profile in database
-                await db.ref(`deliveryPartners/${user.uid}`).set({
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    vehicle: vehicle,
-                    vehicleNumber: vehicleNumber,
-                    approved: false,
-                    online: false,
-                    totalDeliveries: 0,
-                    totalEarnings: 0,
-                    createdAt: Date.now()
+                await db.ref(`customers/${currentUser.uid}`).update({
+                    name, phone, address
                 });
-
-                showSuccess('Registration successful! Waiting for admin approval.');
-                
-                // Clear form fields
-                document.getElementById('signupName').value = '';
-                document.getElementById('signupEmail').value = '';
-                document.getElementById('signupPassword').value = '';
-                document.getElementById('signupPhone').value = '';
-                document.getElementById('signupVehicle').value = '';
-                document.getElementById('signupVehicleNumber').value = '';
-                
-                // Switch to login form after successful registration
-                setTimeout(() => {
-                    toggleForms();
-                }, 2000);
+                alert('Profile updated successfully!');
+                document.getElementById('headerSubtitle').textContent = `Welcome, ${name}!`;
             } catch (error) {
-                console.error('Signup error:', error);
-                let errorMessage = 'Registration failed. ';
-                switch (error.code) {
-                    case 'auth/email-already-in-use':
-                        errorMessage += 'Email already registered.';
-                        break;
-                    case 'auth/invalid-email':
-                        errorMessage += 'Invalid email address.';
-                        break;
-                    case 'auth/weak-password':
-                        errorMessage += 'Password is too weak.';
-                        break;
-                    default:
-                        errorMessage += error.message;
-                }
-                showError(errorMessage);
-            }
-        };
-
-        // Auth state listener
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                currentUser = user;
-                try {
-                    const snapshot = await db.ref(`deliveryPartners/${user.uid}`).once('value');
-                    
-                    if (snapshot.exists()) {
-                        deliveryData = snapshot.val();
-                        document.getElementById('authContainer').style.display = 'none';
-                        document.getElementById('dashboard').style.display = 'block';
-                        
-                        const approvalBadge = document.getElementById('approvalStatus');
-                        const onlineToggle = document.getElementById('onlineToggle');
-                        
-                        if (deliveryData.approved) {
-                            approvalBadge.textContent = '✓ Approved';
-                            approvalBadge.className = 'status-badge status-approved';
-                            onlineToggle.disabled = false;
-                            onlineToggle.checked = deliveryData.online || false;
-                        } else {
-                            approvalBadge.textContent = '⏳ Pending Approval';
-                            approvalBadge.className = 'status-badge status-pending';
-                            onlineToggle.disabled = true;
-                        }
-                        
-                        loadProfileData();
-                        loadOrders();
-                        loadEarnings();
-                    } else {
-                        showError('Delivery partner profile not found. Please contact support.');
-                        await auth.signOut();
-                    }
-                } catch (error) {
-                    console.error('Error loading user data:', error);
-                    showError('Error loading profile data');
-                }
-            } else {
-                currentUser = null;
-                deliveryData = null;
-                document.getElementById('authContainer').style.display = 'flex';
-                document.getElementById('dashboard').style.display = 'none';
+                alert('Error updating profile: ' + error.message);
             }
         });
 
-        // Logout function
-        window.handleLogout = async () => {
-            try {
-                if (currentUser && deliveryData && deliveryData.online) {
-                    await db.ref(`deliveryPartners/${currentUser.uid}`).update({
-                        online: false
-                    });
-                }
-                await auth.signOut();
-            } catch (error) {
-                console.error('Logout error:', error);
-                alert('Error during logout: ' + error.message);
-            }
-        };
-
-        // Tab switching
-        window.switchTab = (tabName) => {
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            event.target.closest('.nav-item').classList.add('active');
-            document.getElementById(`${tabName}Tab`).classList.add('active');
-        };
-
-        // Online status toggle
-        window.toggleOnlineStatus = async () => {
-            const isOnline = document.getElementById('onlineToggle').checked;
-            try {
-                await db.ref(`deliveryPartners/${currentUser.uid}`).update({
-                    online: isOnline,
-                    lastOnlineUpdate: Date.now()
-                });
-            } catch (error) {
-                console.error('Error updating online status:', error);
-                alert('Error updating online status: ' + error.message);
-                document.getElementById('onlineToggle').checked = !isOnline;
-            }
-        };
-
-        // Load profile data
-        function loadProfileData() {
-            if (deliveryData) {
-                document.getElementById('profileName').textContent = deliveryData.name || 'N/A';
-                document.getElementById('profileEmail').textContent = deliveryData.email || 'N/A';
-                document.getElementById('editName').value = deliveryData.name || '';
-                document.getElementById('editPhone').value = deliveryData.phone || '';
-                document.getElementById('editVehicle').value = deliveryData.vehicle || '';
-                document.getElementById('editVehicleNumber').value = deliveryData.vehicleNumber || '';
+        // Load user profile
+        async function loadUserProfile() {
+            const snapshot = await db.ref(`customers/${currentUser.uid}`).once('value');
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                document.getElementById('profileName').value = data.name || '';
+                document.getElementById('profilePhone').value = data.phone || '';
+                document.getElementById('profileAddress').value = data.address || '';
+                document.getElementById('headerSubtitle').textContent = `Welcome, ${data.name}!`;
             }
         }
 
-        // Update profile
-        window.updateProfile = async () => {
-            const name = document.getElementById('editName').value.trim();
-            const phone = document.getElementById('editPhone').value.trim();
-            const vehicle = document.getElementById('editVehicle').value.trim();
-            const vehicleNumber = document.getElementById('editVehicleNumber').value.trim();
+        // Load restaurants
+        function loadRestaurants() {
+            db.ref('restaurants').on('value', (snapshot) => {
+                const restaurants = snapshot.val() || {};
+                const approved = Object.entries(restaurants).filter(([, r]) => r.approved);
+                displayRestaurants(approved);
+            });
+        }
 
-            if (!name || !phone || !vehicle || !vehicleNumber) {
-                alert('Please fill in all fields');
+        // Display restaurants
+        function displayRestaurants(restaurants) {
+            const list = document.getElementById('restaurantsList');
+            if (restaurants.length === 0) {
+                list.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🏪</div><p>No restaurants available</p></div>';
                 return;
             }
 
-            try {
-                await db.ref(`deliveryPartners/${currentUser.uid}`).update({
+            list.innerHTML = restaurants.map(([uid, r]) => `
+                <div class="restaurant-card" onclick="openRestaurant('${uid}')">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400" alt="${r.name}">
+                    <div class="restaurant-info">
+                        <h3>${r.name}</h3>
+                        <p>🍽️ ${r.cuisine || 'Multi-cuisine'}</p>
+                        <p>📍 ${r.address || 'Location not specified'}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Open restaurant menu
+        window.openRestaurant = async (uid) => {
+            currentRestaurant = uid;
+            const snapshot = await db.ref(`restaurants/${uid}`).once('value');
+            const restaurant = snapshot.val();
+
+            document.getElementById('restaurantDetails').innerHTML = `
+                <div class="profile-card">
+                    <h3>${restaurant.name}</h3>
+                    <p>🍽️ ${restaurant.cuisine || 'Multi-cuisine'}</p>
+                    <p>📍 ${restaurant.address || 'Location not specified'}</p>
+                </div>
+            `;
+
+            db.ref(`menus/${uid}`).on('value', (snapshot) => {
+                const menu = snapshot.val() || {};
+                const items = Object.entries(menu).filter(([, item]) => item.available !== false);
+                
+                const menuDiv = document.getElementById('menuItems');
+                if (items.length === 0) {
+                    menuDiv.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🍽️</div><p>No menu items available</p></div>';
+                    return;
+                }
+
+                menuDiv.innerHTML = items.map(([itemId, item]) => `
+                    <div class="menu-item">
+                        <img src="${item.imageUrl || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200'}" alt="${item.name}">
+                        <div class="menu-item-info">
+                            <h4>${item.name}</h4>
+                            <p>${item.description || 'Delicious food item'}</p>
+                            <div class="price">₹${item.price}</div>
+                        </div>
+                        <button class="add-btn" onclick="addToCart('${itemId}', '${item.name}', ${item.price})">Add</button>
+                    </div>
+                `).join('');
+            });
+
+            showContent('menu');
+        };
+
+        // Add to cart
+        window.addToCart = (itemId, name, price) => {
+            const existing = cart.find(c => c.itemId === itemId && c.restaurantId === currentRestaurant);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({
+                    restaurantId: currentRestaurant,
+                    itemId,
                     name,
-                    phone,
-                    vehicle,
-                    vehicleNumber,
-                    updatedAt: Date.now()
+                    price,
+                    quantity: 1
                 });
-                deliveryData.name = name;
-                deliveryData.phone = phone;
-                deliveryData.vehicle = vehicle;
-                deliveryData.vehicleNumber = vehicleNumber;
-                document.getElementById('profileName').textContent = name;
-                alert('Profile updated successfully!');
+            }
+            alert('Added to cart!');
+            updateCartDisplay();
+        };
+
+        // Update cart display
+        function updateCartDisplay() {
+            const cartDiv = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                cartDiv.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🛒</div><p>Your cart is empty</p></div>';
+                document.getElementById('cartSummarySection').innerHTML = '';
+                return;
+            }
+
+            cartDiv.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <div class="cart-item-header">
+                        <h4>${item.name}</h4>
+                        <div class="price">₹${item.price * item.quantity}</div>
+                    </div>
+                    <div class="quantity-control">
+                        <button onclick="updateQuantity(${index}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="updateQuantity(${index}, 1)">+</button>
+                    </div>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('cartSummarySection').innerHTML = `
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span>₹${total}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Delivery Fee:</span>
+                        <span>₹40</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span>₹${total + 40}</span>
+                    </div>
+                    <button class="btn" onclick="openCheckout()" style="margin-top: 15px;">Proceed to Checkout</button>
+                </div>
+            `;
+        }
+
+        // Update quantity
+        window.updateQuantity = (index, change) => {
+            cart[index].quantity += change;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartDisplay();
+        };
+
+        // Load orders
+        function loadOrders() {
+            db.ref(`orders`).orderByChild('customerId').equalTo(currentUser.uid).on('value', (snapshot) => {
+                const orders = snapshot.val() || {};
+                displayOrders(Object.entries(orders).reverse());
+            });
+        }
+
+        // Display orders
+        function displayOrders(orders) {
+            const list = document.getElementById('ordersList');
+            if (orders.length === 0) {
+                list.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📦</div><p>No orders yet</p></div>';
+                return;
+            }
+
+            list.innerHTML = orders.map(([orderId, order]) => `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div class="order-id">Order #${orderId.slice(-6)}</div>
+                        <div class="status-badge status-${order.status || 'placed'}">${order.status || 'placed'}</div>
+                    </div>
+                    <div class="order-info">
+                        <p><strong>Restaurant:</strong> ${order.restaurantName || 'Unknown'}</p>
+                        <p><strong>Items:</strong> ${order.items ? order.items.map(item => `${item.name} (x${item.quantity})`).join(', ') : 'No items'}</p>
+                        <p><strong>Total:</strong> ₹${order.total || 0}</p>
+                        <p><strong>Order Time:</strong> ${new Date(order.createdAt).toLocaleString()}</p>
+                    </div>
+                    ${order.status === 'delivered' ? `<button class="reorder-btn" onclick="rateOrder('${orderId}')">Rate Order</button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Logout function
+        window.logout = async () => {
+            try {
+                await auth.signOut();
+                cart = [];
             } catch (error) {
-                console.error('Error updating profile:', error);
-                alert('Error updating profile: ' + error.message);
+                console.error('Logout error:', error);
             }
         };
 
-        // Load orders (placeholder function)
-        function loadOrders() {
-            const ordersContent = document.getElementById('ordersContent');
-            ordersContent.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-state-icon">📦</div>
-                    <div class="empty-state-text">No orders assigned yet</div>
-                </div>
-            `;
-            
-            // Set placeholder stats
-            document.getElementById('todayDeliveries').textContent = '0';
-            document.getElementById('todayEarnings').textContent = '₹0';
-        }
-
-        // Load earnings (placeholder function)
-        function loadEarnings() {
-            if (deliveryData) {
-                document.getElementById('totalEarnings').textContent = `₹${deliveryData.totalEarnings || 0}`;
-                document.getElementById('totalDeliveries').textContent = deliveryData.totalDeliveries || 0;
-                
-                const avgEarnings = deliveryData.totalDeliveries > 0 
-                    ? Math.round((deliveryData.totalEarnings || 0) / deliveryData.totalDeliveries)
-                    : 0;
-                document.getElementById('avgEarnings').textContent = `₹${avgEarnings}`;
-            }
-            
-            const earningsHistory = document.getElementById('earningsHistory');
-            earningsHistory.innerHTML = `
-                <div class="empty-state">
-                    <div class="empty-state-icon">💰</div>
-                    <div class="empty-state-text">No earnings history yet</div>
-                </div>
-            `;
-        }
+        // Initialize cart display
+        updateCartDisplay();
 
         // Add enter key support for forms
         document.addEventListener('DOMContentLoaded', function() {
             // Login form enter key
             document.getElementById('loginPassword').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
-                    handleLogin();
+                    document.getElementById('loginForm').dispatchEvent(new Event('submit'));
                 }
             });
 
             // Signup form enter key
-            document.getElementById('signupVehicleNumber').addEventListener('keypress', function(e) {
+            document.getElementById('signupPassword').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
-                    handleSignup();
+                    document.getElementById('signupForm').dispatchEvent(new Event('submit'));
                 }
             });
         });
